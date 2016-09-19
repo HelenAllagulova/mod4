@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Михаил
- * Date: 02.08.2016
- * Time: 18:00
- */
+
 class Lang{
     protected  static $data;
 

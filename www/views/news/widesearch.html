@@ -1,0 +1,41 @@
+<div class="comment_block">
+    <?php if(empty($data['widesearch'][0]['message'])){ ?>
+    <ul><h4>Все новости: <br></h4><hr>
+    <?php } else {?>
+        <ul><h3>Поиск новосте по запросу: <br></h3>
+    <?php } ?>
+        <i><?=$data['widesearch'][0]['message']?></i>
+        <br><br>
+        <?php if(!empty($data['widesearch'])):?>
+        <?php foreach($data['widesearch'] as $news):?>
+            <?php if(!empty($news['title'])){?>
+                <li><a href="/news/item/<?=$news['id']?>"><?=$news['title']?></a></li>
+            <?php } else { ?>
+                <br><br>
+                <p>К сожалению результаты по вашему запросы отсутствуют. <br>Выберите другие параметры</p>
+            <?php } ?>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+
+
+    <div style="text-align: center">
+        <?php
+        $count_pages = $data['count_for_paginatior'];
+        if(!empty($data['pagination'])){
+            $active = $data['pagination'];
+        } else {
+            $active = 1;
+        }
+        $count_show_pages = 5   ;
+
+        $url = "/news/widesearch/1";
+
+        $url_page = "/news/widesearch/";
+
+        if(empty($data['widesearch'][0]['message'])){
+            paginator($count_pages, $active, $count_show_pages, $url, $url_page);
+        }
+        ?>
+    </div><br>
+</div>

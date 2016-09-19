@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Михаил
- * Date: 04.08.2016
- * Time: 13:09
- */
+
 class Session{
     protected static $flash_message;
 
@@ -26,14 +21,16 @@ class Session{
     }
 
     public static function get($key){
-        if( isset($_SESSION[$key])){
+        if( isset($_SESSION[$key]))
+        {
             return $_SESSION[$key];
         }
         return null;
     }
 
     public static function delete($key){
-        if( isset($_SESSION[$key])){
+        if( isset($_SESSION[$key]))
+        {
             unset($_SESSION[$key]);
         }
     }

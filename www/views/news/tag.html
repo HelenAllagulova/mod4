@@ -1,0 +1,23 @@
+<div class="comment_block">
+    <ul><h4>Поиск новосте по тегу: <i><?=$data['tag']?></i></h4><hr>
+        <?php if(!empty($data['page'])):?>
+        <?php foreach($data['page'] as $news):?>
+            <li><a href="/news/item/<?=$news['id']?>"><?=$news['title']?></a></li>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+
+    <?php
+            $count_pages = $data['count_for_paginatior'];
+            if(!empty($data['pagination'])){
+                $active = $data['pagination'];
+            } else {
+                $active = 1;
+            }
+
+            $count_show_pages = 5   ;
+            $url = "/news/tag/{$data['tag']}/1";
+            $url_page = "/news/tag/{$data['tag']}/";
+            paginator($count_pages, $active, $count_show_pages, $url, $url_page);
+            ?>
+</div>

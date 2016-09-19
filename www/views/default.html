@@ -2,40 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?=Config::get('site_name') ?></title>
+    <title><?=Config::get('site_name')?></title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/drop_list.css">
+    <!--<script src="/js/admin.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/js/ajax.js"></script>
+    <script src="/js/form_validate.js"></script>
+    <script src="/js/ad.js"></script>
+    <script src="/js/show_other_pages.js"></script>
 </head>
-<body>
+<body style="background-color: <?=$data['body_style']?>">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><?=Config::get('site_name') ?></a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a <?php if( App::getRouter()->getController() == 'pages') { ?>class="active"<?php } ?> href="/pages/">Pages</a></li>
-                    <li><a <?php if( App::getRouter()->getController() == 'contacts') { ?>class="active"<?php } ?> href="/contacts/">Contact Us</a></li>
-                </ul>
-            </div>
+<div style="background-color: <?=$data['header_style']?>;" id="header" >
+
+    <?=$data['nav_bar']?>
+</div>
+<br>
+<div>
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+        <?php if(Session::get('login')): ?>
+            <p style="text-align: left">Добрый день, <?=Session::get('login')?>! <a class="btn btn-xs btn-default" href="/logout">  Выход</a></p>
+        <?php endif; ?>
+    </div>
+</div>
+<div>
+    <br><br>
+    <div class="col-md-2">
+        <?=$data['left_ad']?>
+    </div>
+    <div class="col-md-2">
+        <?=$data['left_bar']?>
+    </div>
+    <div class="col-md-6">
+        <?=$data['content']?>
+    </div>
+    <div class="col-md-2">
+        <div class="comment_block">
+            <div class="comment_info">что будем искать?</div>
+            <form id="search" action="/news/tag" method="post">
+                <input type="text" name="tag" id="search_tags" list="tag_list">
+                <span id="errmsg"></span>
+                <datalist id="tag_list"></datalist>
+                <input hidden type="submit">
+            </form>
         </div>
-    </nav>
+        <div>
+            <?=$data['right_ad']?>
+        </div>
+    </div>
+    <script>
+        $('#search_tags').keyup(function(){
+            var Value = $('#search_tags').val();
+            forNewDom('/news/search/'+Value, 0, 'tag_list');
+            }
+        );
+    </script>
+    <script src="/js/ajax.js"></script>
+</div>
 
-    <div class="container">
-
-        <div class="starter-template">
-            <?php if(Session::hasFlash()) {?>
-                <div class="alert alert-info" role="alert">
-                    <?php Session::flash(); ?>
-
+<?php if(!Session::get('login')): ?>
+<!--Если не авторизован, то блокировать уход-->
+<script src="/js/onexit.js"></script>
+<!--Всплывающий блок-->
+<div style="display: none; padding: 100px; margin: 100px">
+    <div class="modalInner">
+        <section class="offer">
+            <form method="post" action="/subscribers" style="background-color: white; width: 400px; border: 20px solid white" role="form">
+                Подпишитесь на нашу рассылку!<br>
+                <div class="form-group">
+                    <!--<label>Email</label><br>-->
+                    <input class="form-control" type="text" name="email" placeholder="Email">
                 </div>
-            <?php } ?>
-            <?=$data['content'] ?>
-        </div>
-    </div><!-- /.container -->
+                <div class="form-group">
+                    <!--<label>Имя</label><br>-->
+                    <input class="form-control" type="text" name="name" placeholder="Имя">
+                </div>
+                <button class="btn btn-primary">Подписаться</button>
+            </form>
+        </section>
+    </div>
+</div>
+<?php endif;?>
 
+<link rel="stylesheet" href="/js/subscribe_window/jquery.arcticmodal.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="/js/subscribe_window/config.js"></script>
+<script src="/js/subscribe_window/jquery.arcticmodal.js"></script>
+<br>
+<div id="footer" class="col-md-12" style="background-color: <?=$data['header_style']?>;">
+    <h5>Новостной сайт разработан в рамках практической работы студентом "PHP academy"</h5>
+    <h5>Все материалы, размещенные на сайте, используются в качестве демонстрационного контента</h5>
+</div>
 </body>
 </html>
