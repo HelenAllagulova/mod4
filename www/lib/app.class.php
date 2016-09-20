@@ -11,6 +11,11 @@ class App{
     }
 
     public static function run($uri){
+
+        if(!Session::get('timer'))
+        {
+            Session::set('timer', 0);
+        }
        
         self::$router = new Router($uri);
         
