@@ -40,7 +40,9 @@ function ad_style(id)
         $("#"+coupon_id).fadeIn(1000);
 
         coupon_text = 'coupon_text_'+id;
+    if(document.getElementById(coupon_text).innerHTML == ''){
         document.getElementById(coupon_text).innerHTML = randWD(5);
+    }
 
 
 //    price.innerHTML = randWD(5);
@@ -57,7 +59,7 @@ function remove_style(id)
     coupon_id = 'ad_coupon_'+id;
 //    document.getElementById(coupon_id).style.display = 'none';
 
-    $("#"+coupon_id).fadeOut(5000);
+    //$("#"+coupon_id).fadeOut(5000);
 
 //    coupon_text = 'coupon_text_'+id;
 //    document.getElementById(coupon_text).innerHTML = '';

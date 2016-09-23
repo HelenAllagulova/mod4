@@ -34,3 +34,24 @@ function validate_signup(form) {
     }
 }
 
+
+
+
+function validateName(field) {
+    if (field == "") return "Поле имя не может быть пустым\n";
+    else return "";
+}
+
+function validate_subscriber(form) {
+    fail = validateEmail(form.email.value);
+    fail += validateName(form.name.value);
+    if (fail == "")
+    {
+        return true;
+    }
+    else
+    {
+        document.getElementById('subWarnings').innerText = fail+"\n";
+        return false;
+    }
+}
